@@ -26,7 +26,7 @@ export default function Dashboard() {
 
   const fetchNotes = async () => {
     try {
-      const res = await api.get(`/api/createnote/?search=${search}&sort=${sortBy}`);
+      const res = await api.get(`/api/notes/?search=${search}&ordering=${sortBy}`);
       const data = res.data.results || res.data || [];
       setNotes(Array.isArray(data) ? data : []);
     } catch (err) { console.error(err); }
@@ -65,7 +65,7 @@ export default function Dashboard() {
       if (editingId) {
         await api.put(`/api/notes/${editingId}/`, formData);
       } else {
-        await api.post('/api/createnote/', formData);
+        await api.post('/api/note/', formData);
       }
       resetForm();
       fetchNotes();
@@ -97,7 +97,7 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 pb-20">
+    <div className="min-h-screen bg-oklch(44.4% 0.011 73.639) pb-20">
       <Navbar 
         onSearch={setSearch} 
         onCreateClick={() => { resetForm(); setShowCreateForm(!showCreateForm); }} 

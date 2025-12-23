@@ -1,10 +1,13 @@
 import { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import api from "../api/axios";
+// Import your custom components
+import Button from "../components/Button";
+import Input from "../components/Input";
 
 export default function Register() {
   const [formData, setFormData] = useState({
-    username: "",
+    name: "",
     email: "",
     password: "",
   });
@@ -13,52 +16,77 @@ export default function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // Matches your path: path('api/auth/signup/', SignupAPIView...)
-      await api.post("/api/auth/signup/", formData);
+      // Backend expects 'username' or 'email' depending on your Django setup
+      // If using Custom User with email as username:
+      await api.post("/api/register/", {
+        username: formData.email, 
+        email: formData.email,
+        password: formData.password,
+        first_name: formData.name
+      });
       alert("Registration successful! Please login.");
       navigate("/login");
     } catch (err) {
-      console.error(err);
-      alert("Registration failed. Try a different username/email.");
+      console.error("Registration Error:", err.response?.data);
+      alert("Registration failed. Email might already be in use.");
     }
   };
 
   return (
-    <div className="flex items-center justify-center h-screen bg-gray-100">
-      <form onSubmit={handleSubmit} className="p-8 bg-white shadow-xl rounded-lg w-96">
-        <h2 className="text-2xl font-bold mb-6 text-center text-blue-600">Create Account</h2>
-        <input
-          className="w-full border p-2 mb-4 rounded"
-          placeholder="Username"
-          onChange={(e) => setFormData({ ...formData, username: e.target.value })}
-          required
+    <div className="flex items-center justify-center h-screen bg-gray-100 p-4">
+      <form 
+        onSubmit={handleSubmit} 
+        className="p-8 bg-white shadow-lg rounded-[2rem] w-full max-w-md"
+      >
+        <h2 className="text-2xl font-bold mb-6 text-center text-blue-600 tracking-tight">
+          Create Account
+        </h2>
+
+        {/* Name Input */}
+        <Input
+          label="Full Name"
+          placeholder="Nabin Sah"
+          value={formData.name}
+          onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+          required 
         />
-        <input
-          className="w-full border p-2 mb-4 rounded"
+
+        {/* Email Input */}
+        <Input
+          label="Email Address"
           type="email"
-          placeholder="Email Address"
+          placeholder="name@example.com"
+          value={formData.email}
           onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-          required
+          required = "True"
         />
-        <input
-          className="w-full border p-2 mb-6 rounded"
+
+        {/* Password Input */}
+        <Input
+          label="Password"
           type="password"
-          placeholder="Password"
+          placeholder="********"
+          value={formData.password}
           onChange={(e) => setFormData({ ...formData, password: e.target.value })}
           required
         />
-        <button className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700">
-          Sign Up
-        </button>
-        <p className="mt-4 text-sm text-center">
-          Already have an account? <Link to="/login" className="text-blue-500">Login</Link>
+
+        {/* Custom Button Component */}
+        <Button 
+          type="submit" 
+          variant="primary" 
+          className="w-full mt-2"
+        >
+          Register Now
+        </Button>
+
+        <p className="mt-6 text-sm text-center text-gray-600">
+          Already have an account?{" "}
+          <Link to="/login" className="text-blue-500 font-bold hover:underline">
+            Login here
+          </Link>
         </p>
       </form>
     </div>
   );
 }
-
-<p>
-  Already have an account? 
-  <Link to="/login" className="text-blue-500 underline"> Login here</Link>
-</p>

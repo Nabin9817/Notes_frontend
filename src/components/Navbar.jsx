@@ -1,38 +1,49 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+// Import your custom components
+import Button from '../components/Button';
+import Input from '../components/Input';
 
 export default function Navbar({ onSearch, onCreateClick }) {
   const { logout } = useAuth();
   const navigate = useNavigate();
 
   return (
-    <nav className="bg-white border-b px-6 py-3 flex justify-between items-center sticky top-0 z-50 shadow-sm">
+    <nav className="border-b px-6 py-3 flex justify-between items-center sticky top-0">
       <div className="flex items-center gap-6">
-        <Link to="/dashboard" className="text-2xl font-black text-blue-600">NOTELY</Link>
+        <Link to="/dashboard" className="text-2xl font-black text-blue-600 tracking-tighter">
+          NOTELY
+        </Link>
         
-        {/* Search Bar Input */}
-        <input 
-          type="text" 
-          placeholder="Search titles or content..." 
-          onChange={(e) => onSearch(e.target.value)}
-          className="hidden md:block bg-gray-100 border-none rounded-full px-4 py-1.5 text-sm w-64 focus:ring-2 focus:ring-blue-500 transition-all"
-        />
+        {/* --- SEARCH AREA --- */}
+        <div >
+          <Input 
+            type="text" 
+            placeholder="Search titles or content..." 
+            onChange={(e) => onSearch(e.target.value)} 
+          /> 
+        </div>
       </div>
 
-      <div className="flex items-center gap-4">
-        <button 
+      <div className="flex items-center gap-3">
+
+        {/* Using custom Button for Create Note */}
+        <Button 
           onClick={onCreateClick}
-          className="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-bold hover:bg-blue-700 shadow-md transition"
+          variant="primary"
+          className="text-sm py-2 px-5"
         >
           + Create Note
-        </button>
-        <Link to="/categories" className="text-gray-600 font-medium hover:text-blue-600 text-sm">Categories</Link>
-        <button 
+        </Button>
+
+        {/* Using custom Button for Logout */}
+        <Button 
           onClick={() => { logout(); navigate('/'); }}
-          className="text-gray-400 hover:text-red-500 font-medium text-sm transition"
+          variant="outline"
+          className="border-none text-gray-400 hover:text-red-500 text-sm px-2"
         >
           Logout
-        </button>
+        </Button>
       </div>
     </nav>
   );
