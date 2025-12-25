@@ -8,6 +8,7 @@ import Input from "../components/Input";
 export default function Register() {
   const [formData, setFormData] = useState({
     name: "",
+    username:"",
     email: "",
     password: "",
   });
@@ -19,7 +20,7 @@ export default function Register() {
       // Backend expects 'username' or 'email' depending on your Django setup
       // If using Custom User with email as username:
       await api.post("/api/register/", {
-        username: formData.email, 
+        username: formData.username, 
         email: formData.email,
         password: formData.password,
         first_name: formData.name
@@ -42,12 +43,12 @@ export default function Register() {
           Create Account
         </h2>
 
-        {/* Name Input */}
+        {/* Username Input */}
         <Input
-          label="Full Name"
-          placeholder="Nabin Sah"
-          value={formData.name}
-          onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+          label="Username"
+          placeholder="nabinsah123"
+          value={formData.username}
+          onChange={(e) => setFormData({ ...formData, username: e.target.value })}
           required 
         />
 

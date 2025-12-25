@@ -6,7 +6,7 @@ import Button from "../components/Button";
 import Input from "../components/Input";
 
 export default function Login() {
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const { login } = useAuth();
   const navigate = useNavigate();
@@ -14,7 +14,7 @@ export default function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await login({ email, password }); 
+      await login({ username, password }); 
       navigate("/dashboard");
     } catch (err) {
       console.error("Login Error:", err.response?.data);
@@ -27,13 +27,13 @@ export default function Login() {
       <form onSubmit={handleSubmit} className="p-8 bg-white shadow-lg rounded-[2rem] w-96">
         <h2 className="text-2xl font-bold mb-6 text-center text-blue-600 tracking-tight">Login</h2>
         
-        {/* Using your custom Input component for Email */}
+        {/* Using your custom Input component for Username */}
         <Input 
-          label="Email Address"
-          type="email"
-          placeholder="name@example.com"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          label="Username"
+          type="text"
+          placeholder="Enter Your Username"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
           required
         />
 
