@@ -13,6 +13,11 @@ export default function Dashboard() {
   
   const [search, setSearch] = useState("");
   const [sortBy, setSortBy] = useState("-created_at");
+  const [selectedCategory, setSelectedCategory] = useState(""); // State for filtering
+
+  // --- PAGINATION STATE ---
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
 
   const [editingId, setEditingId] = useState(null);
   const [formData, setFormData] = useState({ title: '', content: '', category: [] });
@@ -22,14 +27,29 @@ export default function Dashboard() {
   useEffect(() => {
     fetchNotes();
     fetchCategories();
-  }, [search, sortBy]);
+  }, [search, sortBy, currentPage, selectedCategory]);
 
   const fetchNotes = async () => {
     try {
-      const res = await api.get(`/api/notes/?search=${search}&ordering=${sortBy}`);
+      // Construct URL with Pagination, Search, Sort, and Category Filter
+      let url = `/api/notes/?search=${search}&ordering=${sortBy}&page=${currentPage}`;
+      if (selectedCategory) {
+        url += `&category=${selectedCategory}`;
+      }
+
+      const res = await api.get(url);
+      
+      // Handle Django Paginated Response
       const data = res.data.results || res.data || [];
       setNotes(Array.isArray(data) ? data : []);
-    } catch (err) { console.error(err); }
+
+      // Calculate total pages (Assuming Django PAGE_SIZE is 5)
+      const count = res.data.count || 0;
+      setTotalPages(Math.ceil(count / 5));
+    } catch (err) { 
+      console.error(err); 
+      setNotes([]);
+    }
   };
 
   const fetchCategories = async () => {
@@ -38,6 +58,11 @@ export default function Dashboard() {
       const data = res.data.results || res.data || [];
       setAllCategories(data);
     } catch (err) { console.error(err); }
+  };
+
+  const handleSearchChange = (val) => {
+    setSearch(val);
+    setCurrentPage(1); // Reset to first page on search
   };
 
   // --- ACTIONS ---
@@ -65,7 +90,7 @@ export default function Dashboard() {
       if (editingId) {
         await api.put(`/api/notes/${editingId}/`, formData);
       } else {
-        await api.post('/api/note/', formData);
+        await api.post('/api/notes/', formData);
       }
       resetForm();
       fetchNotes();
@@ -99,7 +124,7 @@ export default function Dashboard() {
   return (
     <div className="min-h-screen bg-oklch(44.4% 0.011 73.639) pb-20">
       <Navbar 
-        onSearch={setSearch} 
+        onSearch={handleSearchChange} 
         onCreateClick={() => { resetForm(); setShowCreateForm(!showCreateForm); }} 
       />
 
@@ -108,17 +133,36 @@ export default function Dashboard() {
         {/* --- TOOLBAR --- */}
         <div className="flex flex-col md:flex-row justify-between items-center mb-8 gap-4">
           <h1 className="text-3xl font-black text-gray-900 tracking-tight">Your Vault</h1>
-          <div className="flex items-center gap-3 bg-white p-2 rounded-xl shadow-sm border border-gray-100">
-            <span className="text-[10px] font-black text-gray-400 uppercase ml-2">Sort</span>
-            <select 
-              className="bg-transparent text-sm font-bold outline-none cursor-pointer text-blue-600 mr-2"
-              value={sortBy}
-              onChange={(e) => setSortBy(e.target.value)}
-            >
-              <option value="-created_at">Newest First</option>
-              <option value="created_at">Oldest First</option>
-              <option value="title">Alphabetical (A-Z)</option>
-            </select>
+          
+          <div className="flex items-center gap-3">
+            {/* CATEGORY FILTER DROPDOWN */}
+            <div className="flex items-center gap-2 bg-white p-2 rounded-xl shadow-sm border border-gray-100">
+              <span className="text-[10px] font-black text-gray-400 uppercase ml-2 text-nowrap">Filter By</span>
+              <select 
+                className="bg-transparent text-sm font-bold outline-none cursor-pointer text-blue-600 mr-2"
+                value={selectedCategory}
+                onChange={(e) => { setSelectedCategory(e.target.value); setCurrentPage(1); }}
+              >
+                <option value="">All Categories</option>
+                {allCategories.map(cat => (
+                  <option key={cat.id} value={cat.id}>{cat.name}</option>
+                ))}
+              </select>
+            </div>
+
+            {/* SORT DROPDOWN */}
+            <div className="flex items-center gap-2 bg-white p-2 rounded-xl shadow-sm border border-gray-100">
+              <span className="text-[10px] font-black text-gray-400 uppercase ml-2 text-nowrap">Sort</span>
+              <select 
+                className="bg-transparent text-sm font-bold outline-none cursor-pointer text-blue-600 mr-2"
+                value={sortBy}
+                onChange={(e) => { setSortBy(e.target.value); setCurrentPage(1); }}
+              >
+                <option value="-created_at">Newest First</option>
+                <option value="created_at">Oldest First</option>
+                <option value="title">Alphabetical (A-Z)</option>
+              </select>
+            </div>
           </div>
         </div>
 
@@ -161,7 +205,7 @@ export default function Dashboard() {
                     value={newCatName}
                     onChange={e => setNewCatName(e.target.value)}
                   />
-                  <div className="mb-4"> {/* Wrapper to align with Input's mb-4 */}
+                  <div className="mb-4">
                     <Button variant="secondary" onClick={handleQuickAddCategory} className="h-[58px]">
                       Add
                     </Button>
@@ -180,7 +224,7 @@ export default function Dashboard() {
               <div className="flex justify-end gap-4 mt-6 border-t pt-6">
                 <Button variant="outline" onClick={resetForm}>Cancel</Button>
                 <Button type="submit">
-                  {editingId ? 'Update Note' : 'Save Note'}
+                  {editingId ? 'Update Notes' : 'Save Notes'}
                 </Button>
               </div>
             </form>
@@ -216,6 +260,43 @@ export default function Dashboard() {
             </div>
           ))}
         </div>
+
+        {/* --- PAGINATION CONTROLS --- */}
+        {totalPages > 1 && (
+          <div className="flex justify-center items-center gap-6 mt-12">
+            <Button 
+              variant="outline" 
+              disabled={currentPage === 1}
+              onClick={() => setCurrentPage(prev => prev - 1)}
+            >
+              Previous
+            </Button>
+            
+            <div className="flex gap-2">
+              {[...Array(totalPages)].map((_, i) => (
+                <button
+                  key={i + 1}
+                  onClick={() => setCurrentPage(i + 1)}
+                  className={`w-8 h-8 rounded-lg font-bold text-xs transition-all ${
+                    currentPage === i + 1 
+                    ? 'bg-blue-600 text-white' 
+                    : 'bg-white text-gray-400 border border-gray-100 hover:border-blue-300'
+                  }`}
+                >
+                  {i + 1}
+                </button>
+              ))}
+            </div>
+
+            <Button 
+              variant="outline" 
+              disabled={currentPage === totalPages}
+              onClick={() => setCurrentPage(prev => prev + 1)}
+            >
+              Next
+            </Button>
+          </div>
+        )}
       </div>
 
       {/* --- DETAIL VIEW MODAL --- */}
@@ -234,6 +315,13 @@ export default function Dashboard() {
                 <div className="flex flex-col">
                   <span className="text-[10px] font-black text-gray-300 uppercase tracking-widest">Modified</span>
                   <span className="text-sm font-bold text-gray-400">{new Date(viewingNote.updated_at).toLocaleDateString()}</span>
+                </div>
+                <div className="flex gap-1">
+                   {viewingNote.category_names?.map((name, index) => (
+                    <span key={index} className="text-[9px] bg-blue-600 text-white px-3 py-1 rounded-full font-black uppercase">
+                      {name}
+                    </span>
+                  ))}
                 </div>
                 <Button variant="secondary" className="px-12 py-4" onClick={() => setViewingNote(null)}>
                   Got it
