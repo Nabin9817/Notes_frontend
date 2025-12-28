@@ -4,9 +4,12 @@ A modern, responsive note-taking application built with React and Vite. This app
 
 ## Screenshot
 
-<img src="Images/register.png" width="400" height="200" alt="register Screen" />
-
-
+<img src="Images/register.png" width="500" height="350" alt="register Screen" />
+<img src="Images/login.png" width="500" height="350" alt="login  Screen" />
+<img src="Images/dashboard1.png" width="500" height="350" alt="dashboard1 Screen" />
+<img src="Images/dashboard2.png" width="500" height="350" alt="dashboard2 Screen" />
+<img src="Images/create.png" width="500" height="350" alt="create Screen" />
+<img src="Images/update.png" width="500" height="350" alt="update Screen" />
 
 
 ✨ Features
