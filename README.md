@@ -2,7 +2,9 @@
 
 A modern, responsive note-taking application built with React and Vite. This application features full CRUD capabilities, category-based organization, and secure email verification.
 
-!(Images/register.png)
+<img src="images/register.png" width="300" height="200" alt="register" />
+
+
 
 ✨ Features
 
