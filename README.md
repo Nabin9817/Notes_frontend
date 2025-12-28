@@ -14,10 +14,10 @@ NoteVault is a modern, high-performance note-taking application built with **Rea
 ## ✨ Features
 
 * **Secure Authentication:** JWT-based login and registration.
-* **Dynamic Dashboard:** 
-    -**Search:** Real-time note filtering by title or content.
-    -**Category Filter:** Dropdown-based filtration for organized viewing.
-    -**Sorting:** Toggle between newest, oldest, and alphabetical views.
+* **Dynamic Dashboard:**
+  * **Search:** Real-time note filtering by title or content.
+  * **Category Filter:** Dropdown-based filtration for organized viewing.
+  * **Sorting:** Toggle between newest, oldest, and alphabetical views.
 * **Responsive Design:** Fully optimized for Mobile, Tablet, and Desktop using Tailwind CSS.
 * **Pagination:** Efficiently handles large volumes of notes.
 
