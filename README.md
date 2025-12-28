@@ -1,7 +1,11 @@
 🚀 NoteVault Frontend
+
 A modern, responsive note-taking application built with React and Vite. This application features full CRUD capabilities, category-based organization, and secure email verification.
 
+!(Images/register.png)
+
 ✨ Features
+
 Secure Authentication: JWT-based login and registration.
 
 Dynamic Dashboard: * Search: Real-time note filtering by title or content.
