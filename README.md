@@ -4,8 +4,6 @@ A modern, responsive note-taking application built with React and Vite. This app
 ✨ Features
 Secure Authentication: JWT-based login and registration.
 
-Email Verification: New accounts are locked until verified via an email link.
-
 Dynamic Dashboard: * Search: Real-time note filtering by title or content.
 
 Category Filter: Dropdown-based filtration for organized viewing.
