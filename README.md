@@ -1,8 +1,10 @@
-**🚀 NoteVault Frontend**
+# 🚀 NoteVault Frontend
+---
 
-A modern, responsive note-taking application built with **React** and **Vite**. This application features full CRUD capabilities, category-based organization, and secure email verification.
+NoteVault is a modern, high-performance note-taking application built with **React** and **Vite**. It offers a seamless user experience for capturing thoughts, organizing them by categories, and managing them with a clean, responsive interface.
 
-**Screenshot**
+## Screenshot
+---
 
 <img src="Images/register.png" width="500" height="350" alt="register Screen" />
 <img src="Images/login.png" width="500" height="350" alt="login  Screen" />
@@ -12,43 +14,46 @@ A modern, responsive note-taking application built with **React** and **Vite**. 
 <img src="Images/Update.png" width="500" height="350" alt="update Screen" />
 
 
-**✨ Features**
+## ✨ Features
+---
 
-**Secure Authentication:** JWT-based login and registration.
+* **Secure Authentication:** JWT-based login and registration.
+* **Dynamic Dashboard:** * Search: Real-time note filtering by title or content.
+* **Category Filter:** Dropdown-based filtration for organized viewing.
+* **Sorting:** Toggle between newest, oldest, and alphabetical views.
+* **Responsive Design:** Fully optimized for Mobile, Tablet, and Desktop using Tailwind CSS.
+* **Pagination:** Efficiently handles large volumes of notes.
 
-**Dynamic Dashboard:** * Search: Real-time note filtering by title or content.
+## 🛠️ Tech Stack
+---
 
-**Category Filter:** Dropdown-based filtration for organized viewing.
+* **Framework:** React.js (Vite)
+* **Styling:** Tailwind CSS
+* **Routing:** React Router DOM v6
+* **API Client:** Axios
 
-**Sorting:** Toggle between newest, oldest, and alphabetical views.
-
-**Responsive Design:** Fully optimized for Mobile, Tablet, and Desktop using Tailwind CSS.
-
-**Pagination:** Efficiently handles large volumes of notes.
-
-**🛠️ Tech Stack**
-
-**Framework:** React.js (Vite)
-
-**Styling:** Tailwind CSS
-
-**Routing:** React Router DOM v6
-
-**API Client:** Axios
+## 📦 Getting Started
+---
+Before you begin, ensure you have the following installed:
+* **Node.js:** v22.16.0
+* **npm:** 10.9.2
 
 
-**📦 Installation**
 
-**1.Clone the repository:**
+## 📦 Installation
+---
+
+### 1.Clone the repository:
+```bash
 git clone https://github.com/Nabin9817/Notes_frontend.git
 cd note-app-frontend
 
-**2.Install dependencies:**
+### 2.Install dependencies:
 npm install 
 
-**3.Configure Environment Variables: Create a .env file in the root directory:**
+### 3.Configure Environment Variables: Create a .env file in the root directory:
 VITE_API_URL=http://localhost:8000
 
-**4. Run Development Server:**
+### 4. Run Development Server:
 npm run dev
 
