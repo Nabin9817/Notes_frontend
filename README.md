@@ -4,7 +4,8 @@ A modern, responsive note-taking application built with React and Vite. This app
 
 ## Screenshot
 
-![App Screenshot](Images/register.png)
+<img src="Images/register.png" width="400" height="200" alt="register Screen" />
+
 
 
 
