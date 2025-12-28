@@ -17,8 +17,7 @@ export default function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // Backend expects 'username' or 'email' depending on your Django setup
-      // If using Custom User with email as username:
+      // Backend expects 'username'  depending on  Django setup
       await api.post("/api/register/", {
         username: formData.username, 
         email: formData.email,
