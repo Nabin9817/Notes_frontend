@@ -4,12 +4,12 @@ A modern, responsive note-taking application built with React and Vite. This app
 
 ## Screenshot
 
-<img src="Images/register.png" width="500" height="350" alt="register Screen" />
-<img src="Images/login.png" width="500" height="350" alt="login  Screen" />
-<img src="Images/dashboard1.png" width="500" height="350" alt="dashboard1 Screen" />
-<img src="Images/dashboard2.png" width="500" height="350" alt="dashboard2 Screen" />
-<img src="Images/create.png" width="500" height="350" alt="create Screen" />
-<img src="Images/update.png" width="500" height="350" alt="update Screen" />
+<img src="Images/register.png" width="450" height="350" alt="register Screen" />
+<img src="Images/login.png" width="450" height="350" alt="login  Screen" />
+<img src="Images/dashboard1.png" width="450" height="350" alt="dashboard1 Screen" />
+<img src="Images/dashboard2.png" width="450" height="350" alt="dashboard2 Screen" />
+<img src="Images/create.png" width="450" height="350" alt="create Screen" />
+<img src="Images/update.png" width="450" height="350" alt="update Screen" />
 
 
 ✨ Features
@@ -27,6 +27,7 @@ Responsive Design: Fully optimized for Mobile, Tablet, and Desktop using Tailwin
 Pagination: Efficiently handles large volumes of notes.
 
 🛠️ Tech Stack
+
 Framework: React.js (Vite)
 
 Styling: Tailwind CSS
@@ -38,6 +39,7 @@ API Client: Axios
 Icons/UI: Lucide React & Custom OKLCH Color Palette
 
 📦 Installation
+
 1.Clone the repository:
 git clone https://github.com/Nabin9817/Notes_frontend.git
 cd note-app-frontend
