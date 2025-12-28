@@ -18,7 +18,6 @@ export const AuthProvider = ({ children }) => {
     } catch (err) {
       console.error("Auth initialization failed", err);
     } finally {
-      // THIS MUST RUN no matter what to remove the blank screen
       setLoading(false); 
     }
   };
@@ -26,13 +25,11 @@ export const AuthProvider = ({ children }) => {
 }, []);
 
  const login = async (credentials) => {
-  // 'credentials' will now be { email: "...", password: "..." }
   const res = await api.post('/api/login/', credentials);
   
   localStorage.setItem('access_token', res.data.access);
   localStorage.setItem('refresh_token', res.data.refresh);
   
-  // Optional: If your backend returns user info, save it here
   setUser({ loggedIn: true, role: res.data.is_staff ? 'admin' : 'user' });
 };
 

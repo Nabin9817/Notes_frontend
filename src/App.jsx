@@ -6,7 +6,6 @@ import ProtectedRoute from './routes/ProtectedRoute';
 import Dashboard from './pages/Dashboard';
 import Login from './pages/Login';
 import Register from './pages/Register';
-import Categories from './pages/Categories';
 
 function App() {
   return (
@@ -19,8 +18,7 @@ function App() {
           
           {/* Protected Routes: Only accessible if logged in */}
           <Route element={<ProtectedRoute />}>
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/categories" element={<Categories />} />
+          <Route path="/dashboard" element={<Dashboard />} />
           </Route>
 
           {/* Default Redirect */}

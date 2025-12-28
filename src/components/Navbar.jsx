@@ -1,6 +1,7 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-// Import your custom components
+
+// Import custom components
 import Button from '../components/Button';
 import Input from '../components/Input';
 
@@ -9,7 +10,7 @@ export default function Navbar({ onSearch, onCreateClick }) {
   const navigate = useNavigate();
 
   return (
-    <nav className="border-b px-6 py-3 flex justify-between items-center sticky top-0">
+    <nav className="border-b px-6 py-3 flex justify-between items-center">
       <div className="flex items-center gap-6">
         <Link to="/dashboard" className="text-2xl font-black text-blue-600 tracking-tighter">
           NOTELY

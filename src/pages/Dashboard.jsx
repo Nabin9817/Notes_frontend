@@ -43,9 +43,9 @@ export default function Dashboard() {
       const data = res.data.results || res.data || [];
       setNotes(Array.isArray(data) ? data : []);
 
-      // Calculate total pages (Assuming Django PAGE_SIZE is 5)
+      // Calculate total pages (Assuming Django PAGE_SIZE is 6)
       const count = res.data.count || 0;
-      setTotalPages(Math.ceil(count / 5));
+      setTotalPages(Math.ceil(count / 6));
     } catch (err) { 
       console.error(err); 
       setNotes([]);
@@ -174,7 +174,7 @@ export default function Dashboard() {
             </h2>
             <form onSubmit={handleSaveNote}>
               <Input 
-                placeholder="Title goes here..."
+                placeholder="Title"
                 value={formData.title}
                 onChange={e => setFormData({...formData, title: e.target.value})}
                 required
@@ -201,7 +201,7 @@ export default function Dashboard() {
                 
                 <div className="flex gap-2 max-w-sm">
                   <Input 
-                    placeholder="New shared tag..."
+                    placeholder="add category"
                     value={newCatName}
                     onChange={e => setNewCatName(e.target.value)}
                   />
